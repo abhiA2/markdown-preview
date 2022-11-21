@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Badge from 'react-bootstrap/Badge';
+import { marked } from 'marked';
 
 const App = () => {
+  const [markdown, setMarkdown] = useState('');
 
   const inputStyle = {
     width: "400px",
@@ -37,34 +39,45 @@ const App = () => {
         <div className="row mt-4">
           <div className="col-md-6">
             <div className="col text-center">
-              <h1>
+              <h4>
                 <Badge className="text-align-center" variant="light">
                   Markdown Input
                 </Badge>
-              </h1>
+              </h4>
             </div>
             <div className="mark-input">
-              <textarea className="input" style={inputStyle}></textarea>
+              <textarea
+                className="input"
+                style={inputStyle}
+                onChange={(e) => setMarkdown(e.target.value)}
+                value={markdown}
+
+              ></textarea>
             </div>
           </div>
 
           <div className="col-md-6">
+            {" "}
             <div className="col text-center">
-              <h1>
-                <Badge className="text-align-center" variant="light">
+              <h4>
+                <Badge className="text-align-center" variant="secondary">
                   Preview
                 </Badge>
-              </h1>
+              </h4>
             </div>
-            <div className="mark-input">
-              <textarea className="input" style={outputStyle}></textarea>
+            <div
+              style={outputStyle}
+              dangerouslySetInnerHTML={{ __html: marked(markdown) }}
+            >
             </div>
+
           </div>
         </div>
       </div>
     </div>
   );
 }
+
 
 export default App;
 
